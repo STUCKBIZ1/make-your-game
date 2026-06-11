@@ -1,12 +1,15 @@
 // 1. Variables
-let avatarX = 0;
-let avatarY = 0;
+const avatarWidth = 50;
+const avatarHeight = 50;
+let avatarX = (window.innerWidth - avatarWidth) / 2;
+let avatarY = (window.innerHeight - avatarHeight) / 2;
 let lastTime = 0;
 const speed = 0.2;
 let score = 0;
 let gameTime = 0;
 let lastScore = -1;
 let isPaused = false;
+
 
 
 // 2. Keys
@@ -32,7 +35,7 @@ window.addEventListener('keydown', (e) => {
     } else {
         pauseMenu.style.display = "none"
 
-        lastTime = performance.now();
+        lastTime = performance.now(); // block time in pause game
     }
 
     if (Keys.hasOwnProperty(e.code)) {
@@ -60,13 +63,24 @@ function gameLoop(timestamp) {
     if (Keys.ArrowUp) avatarY -= speed * deltaTime;
     if (Keys.ArrowDown) avatarY += speed * deltaTime;
 
+    if (avatarX < 0) {
+        avatarX = 0;
+    } else if (avatarX + avatarWidth > window.innerWidth) {
+        avatarX = window.innerWidth - avatarWidth;
+    }
+    if (avatarY < 0) {
+        avatarY = 0; 
+    } else if (avatarY + avatarHeight > window.innerHeight) {
+        avatarY = window.innerHeight - avatarHeight;
+    }
+
     avatar.style.left = avatarX + 'px';
-    avatar.style.top  = avatarY + 'px';
+    avatar.style.top = avatarY + 'px';
 
     gameTime += deltaTime
-   score = Math.floor(gameTime / 1000);
+    score = Math.floor(gameTime / 1000);
 
-   if (score !== lastScore) {
+    if (score !== lastScore) {
         scoreElement.textContent = score;
         lastScore = score;
     }
