@@ -10,6 +10,15 @@ let gameTime = 0;
 let lastScore = -1;
 let isPaused = false;
 
+const enemies = [
+    {
+        element: document.getElementById("enemy1"), 
+        x: 10,          
+        y: 10,          
+        speedX: 0.15,   
+        direction: 1 
+    }
+];
 
 
 // 2. Keys
@@ -83,6 +92,22 @@ function gameLoop(timestamp) {
     if (score !== lastScore) {
         scoreElement.textContent = score;
         lastScore = score;
+    }
+
+    // Enemy Logic
+    for (let i = 0; i < enemies.length; i++) {
+        let enemy = enemies[i];
+
+        // 1. Update State
+        enemy.x = enemy.x + (enemy.speedX * enemy.direction * deltaTime);
+
+        // 2. Collision with screen bounds
+        if (enemy.x <= 0 || enemy.x + 40 >= window.innerWidth) {
+            enemy.direction = enemy.direction * -1;
+        }
+
+        // 3. Render
+        enemy.element.style.left = enemy.x + 'px';
     }
 
     requestAnimationFrame(gameLoop);
