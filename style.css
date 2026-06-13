@@ -113,3 +113,37 @@ body, html {
         transform: translate(-50%, -50%) scale(1);
     }
 }
+
+/* Enemy Styling */
+#enemy1 {
+    background: linear-gradient(135deg, #7f1d1d, #ef4444) !important;
+    border-radius: 12px !important;
+    box-shadow: 
+        0 0 25px rgba(239, 68, 68, 0.7),
+        inset 0 0 10px rgba(255, 255, 255, 0.3) !important;
+    border: 2px solid rgba(252, 165, 165, 0.9) !important;
+    box-sizing: border-box; /* Maintain JS sizing */
+    z-index: 40;
+    display: flex !important;
+    align-items: center;
+    justify-content: center;
+    animation: enemyPulse 1.5s infinite alternate;
+}
+
+#enemy1::after {
+    content: '👾'; /* Alien monster emoji */
+    font-size: 24px;
+    line-height: 1;
+    filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.5));
+}
+
+@keyframes enemyPulse {
+    0% {
+        box-shadow: 0 0 15px rgba(239, 68, 68, 0.5), inset 0 0 10px rgba(255, 255, 255, 0.3);
+        transform: scale(0.95);
+    }
+    100% {
+        box-shadow: 0 0 35px rgba(239, 68, 68, 0.9), inset 0 0 15px rgba(255, 255, 255, 0.6);
+        transform: scale(1.05);
+    }
+}
