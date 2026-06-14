@@ -9,6 +9,7 @@ let score = 0;
 let gameTime = 0;
 let lastScore = -1;
 let isPaused = false;
+const bullets = [];
 
 const enemies = [
     {
@@ -25,8 +26,6 @@ const enemies = [
 const Keys = {
     ArrowRight: false,
     ArrowLeft: false,
-    ArrowUp: false,
-    ArrowDown: false
 };
 
 // 3. DOM Element
@@ -36,6 +35,7 @@ const pauseMenu = document.getElementById("pause-menu");
 
 // 4. Event Listeners 
 window.addEventListener('keydown', (e) => {
+    // pause menu
     if (e.code === "KeyP") {
         isPaused = !isPaused
     }
@@ -49,6 +49,37 @@ window.addEventListener('keydown', (e) => {
 
     if (Keys.hasOwnProperty(e.code)) {
         Keys[e.code] = true;
+    }
+    // bullet space
+    if (e.code === 'Space' && !isPaused) {
+        // 1. Create DOM Node
+        const bulletNode = document.createElement('div');
+        
+        // 2. CSS Styling
+        bulletNode.style.position = 'absolute';
+        bulletNode.style.width = '4px';
+        bulletNode.style.height = '15px';
+        bulletNode.style.background = '#38bdf8';
+        bulletNode.style.boxShadow = '0 0 10px #38bdf8';
+        bulletNode.style.borderRadius = '2px';
+        
+        // 3. Initial Position
+        const bulletX = avatarX + (avatarWidth / 2) - 2;
+        const bulletY = avatarY;
+        
+        bulletNode.style.left = bulletX + 'px';
+        bulletNode.style.top = bulletY + 'px';
+        
+        // 4. Append to DOM Tree
+        document.body.appendChild(bulletNode);
+        
+        // 5. Add to Game State
+        bullets.push({
+            element: bulletNode,
+            x: bulletX,
+            y: bulletY,
+            speedY: 0.5 // bullet speed
+        });
     }
 });
 
@@ -69,18 +100,11 @@ function gameLoop(timestamp) {
 
     if (Keys.ArrowRight) avatarX += speed * deltaTime;
     if (Keys.ArrowLeft) avatarX -= speed * deltaTime;
-    if (Keys.ArrowUp) avatarY -= speed * deltaTime;
-    if (Keys.ArrowDown) avatarY += speed * deltaTime;
 
     if (avatarX < 0) {
         avatarX = 0;
     } else if (avatarX + avatarWidth > window.innerWidth) {
         avatarX = window.innerWidth - avatarWidth;
-    }
-    if (avatarY < 0) {
-        avatarY = 0; 
-    } else if (avatarY + avatarHeight > window.innerHeight) {
-        avatarY = window.innerHeight - avatarHeight;
     }
 
     avatar.style.left = avatarX + 'px';
@@ -108,6 +132,22 @@ function gameLoop(timestamp) {
 
         // 3. Render
         enemy.element.style.left = enemy.x + 'px';
+    }
+    // bullet movement
+    for (let i = bullets.length - 1; i >= 0; i--) {
+        let bullet = bullets[i];
+        
+        // 1. Update State
+        bullet.y -= bullet.speedY * deltaTime;
+        
+        // 2. Render State
+        bullet.element.style.top = bullet.y + 'px';
+        
+        // 3. Memory & DOM Cleanup
+        if (bullet.y < 0) {
+            bullet.element.remove(); // remove bullet from DOM Tree
+            bullets.splice(i, 1);    // remove bullet from Array in memory
+        }
     }
 
     requestAnimationFrame(gameLoop);
