@@ -19,13 +19,21 @@ The goal of this project is to build a high-performance **Space Invaders** clone
 
 ## 🏗️ System Architecture
 
-To ensure parallel development and zero merge conflicts, the codebase is strictly separated into two domains: **The Core Engine** and **The Game Logic**.
+To ensure parallel development and zero merge conflicts, the codebase is strictly separated into three domains: **The Core Engine**, **The Game Logic**, and **The UI & Rendering**.
 
-## ⚔️ Tactical Task Distribution
+<div align="center">
+  <img src="assets/split_tasks.png" alt="Task Split Architecture" width="100%" />
+</div>
 
-![Task Split Architecture](./assets/tasks.png)
+<br />
 
-*The exact file and module split between Developer 1 and Developer 2, generated directly from our Excalidraw planning.*
+| Domain | ⚙️ Dev 1: Core Engine | 👾 Dev 2: Game Logic | 🎨 Dev 3: UI & Rendering |
+| :--- | :--- | :--- | :--- |
+| **Primary Focus** | Loop Performance, Math, and Physics | Entities, Wave Spawning, and Rules | Visuals, DOM Rendering, and Menus |
+| **Responsibilities** | Implements `rAF` loop & Delta-Time | Updates internal state of game objects | Updates DOM transforms based on state |
+| **Input Handling** | Tracks exact key states continuously | Triggers bullet spawning & movement | Manages Start/Pause menus & UI clicks |
+| **Collision System** | AABB Collision detection math | Defines win/lose logic upon collision | Triggers visual effects & DOM updates |
+| **Specific Files** | `loop.js`, `input.js`, `physics.js` | `logic.js`, `entities.js` | `renderer.js`, `ui.js`, `state.js` |
 
 ---
 
