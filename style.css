@@ -13,8 +13,10 @@ body{
 }
 .enemys{
     position: relative;
-    display: flex;
-    justify-content: center;
-    align-content: center;
     z-index: 1;
+    top: 150px;
+}
+.enemy{
+    width: 70px;
+    height: 70px;
 }
