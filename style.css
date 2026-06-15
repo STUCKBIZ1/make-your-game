@@ -1,0 +1,20 @@
+body{
+    margin: 0;
+    display: flex;
+    justify-content: center;
+    align-content: center;
+}
+.background{
+    position: absolute;
+    width: 100vw;
+    height: 100vh;
+    display: block;
+    z-index: 0;
+}
+.enemys{
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-content: center;
+    z-index: 1;
+}
