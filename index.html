@@ -1,47 +1,47 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
+
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-    <link rel="stylesheet" href="./style.css">
+    <title>Make Your Game</title>
+    <link rel="stylesheet" href="style.css">
 </head>
+
 <body>
-    
-    <img class="background" src="./assets/images/background.jpg">
-    
-    <div class="enemys">
-        <div class="enemys123" >
-            <img class="enemy" src="assets/images/enemy1_1.png">
-            <img class="enemy" src="assets/images/enemy1_1.png">
-            <img class="enemy" src="assets/images/enemy1_1.png">
-            <img class="enemy" src="assets/images/enemy1_1.png">
-            <img class="enemy" src="assets/images/enemy1_1.png">
-            <img class="enemy" src="assets/images/enemy1_1.png">
-            <img class="enemy" src="assets/images/enemy1_1.png">
-            <img class="enemy" src="assets/images/enemy1_1.png">
+    <div style="display: flex; flex-direction: column; gap: 15px;">
+
+        <div id="ui-layer">
+            <div>
+                Score: <span id="score">0</span>
+                <span style="margin-left: 30px;">Lives: <span id="lives">💖💖💖</span></span>
+            </div>
+            <button id="pause-btn">||</button>
         </div>
-        <div class="enemys123">
-            <img class="enemy" src="assets/images/enemy2_1.png">
-            <img class="enemy" src="assets/images/enemy2_1.png">
-            <img class="enemy" src="assets/images/enemy2_1.png">
-            <img class="enemy" src="assets/images/enemy2_1.png">
-            <img class="enemy" src="assets/images/enemy2_1.png">
-            <img class="enemy" src="assets/images/enemy2_1.png">
-            <img class="enemy" src="assets/images/enemy2_1.png">
-            <img class="enemy" src="assets/images/enemy2_1.png">
+
+        <div id="game-container">
+            <div id="pause-menu"
+                style="display: none; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); z-index: 1000; text-align: center;">
+                <div
+                    style="margin-bottom: 30px; font-size: 2.5rem; color: #38bdf8; text-shadow: 0 0 15px rgba(56, 189, 248, 0.8);">
+                    PAUSED</div>
+                <div style="display: flex; gap: 20px; justify-content: center;">
+                    <button id="continue-btn" class="menu-btn">CONTINUE (P)</button>
+                    <button id="restart-btn" class="menu-btn">RESTART (R)</button>
+                </div>
+
+                <div id="game-over-screen" class="hidden">
+                    <h1>GAME OVER</h1>
+                    <p>Final Score: <span id="final-score">0</span></p>
+                    <button id="restart-btn">Try Again</button>
+                </div>
+            </div>
+
+            <div id="avatar"
+                style="position: absolute; left: 0px; top: 0px; width: 50px; height: 50px; background: red;"></div>
         </div>
-        <div class="enemys123">
-            <img class="enemy" src="assets/images/enemy3_1.png">
-            <img class="enemy" src="assets/images/enemy3_1.png">
-            <img class="enemy" src="assets/images/enemy3_1.png">
-            <img class="enemy" src="assets/images/enemy3_1.png">
-            <img class="enemy" src="assets/images/enemy3_1.png">
-            <img class="enemy" src="assets/images/enemy3_1.png">
-            <img class="enemy" src="assets/images/enemy3_1.png">
-            <img class="enemy" src="assets/images/enemy3_1.png">
-        </div>
+
     </div>
-    <script src=""></script>
+    <script type="module" src="engine/game.js"></script>
 </body>
+
 </html>
